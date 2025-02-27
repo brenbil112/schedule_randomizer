@@ -25,6 +25,39 @@
     <button onclick="generateCalendar()">Generate Calendar</button>
     <div id="calendar"></div>
 
-<script src="script.js"></script>
+<script>
+function generateCalendar() {
+    const monthSelect = document.getElementById('month');
+    const month = parseInt(monthSelect.value);
+    const year = 2025;
+    const calendarDiv = document.getElementById('calendar');
+    calendarDiv.innerHTML = '';
+
+    const date = new Date(year, month - 1, 1);
+    const daysInMonth = new Date(year, month, 0).getDate();
+
+    let table = '<table border="1"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+
+    for (let i = 0; i < date.getDay(); i++) {
+        table += '<td></td>';
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        if (date.getDay() === 0 && day !== 1) {
+            table += '</tr><tr>';
+        }
+        table += `<td>${day}</td>`;
+        date.setDate(date.getDate() + 1);
+    }
+
+    while (date.getDay() !== 0) {
+        table += '<td></td>';
+        date.setDate(date.getDate() + 1);
+    }
+
+    table += '</tr></table>';
+    calendarDiv.innerHTML = table;
+}
+</script>
 </body>
 </html>
